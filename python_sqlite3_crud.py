@@ -67,20 +67,26 @@ def update(nome_tabela) -> None:
     :param nome_tabela: Aqui vai o nome da sua tabela para que a função possa acessá-la e editar os dados.
     :return: Não há retorno (None).
     """
-    try:
-        id = str(input("Qual é o id da pessoa? "))
-        coluna = str(input("Qual coluna deseja atualizar? ")).lower()
-        if coluna == "idade":
-            dado = int(input("Novo dado: "))
-        else:
-            dado = str(input("Novo dado: "))
-        comando = f"UPDATE {nome_tabela} SET {coluna} = '{dado}' WHERE id = {id}"
-        cursor.execute(comando)
-        banco.commit()
-        print("Dado atualizado com sucesso!")
-    except ValueError:
-        print("Ocorreu um problema: dado 'idade' incorreto.\n"
-              "Por favor, tente novamente!")
+    while True:
+        try:
+            id = str(input("Qual é o id da pessoa? "))
+            coluna = str(input("Qual o nome da coluna que você deseja atualizar? ")).lower()
+            if coluna == "idade":
+                dado = int(input("Novo dado: "))
+            else:
+                dado = str(input("Novo dado: "))
+            comando = f"UPDATE {nome_tabela} SET {coluna} = '{dado}' WHERE id = {id}"
+            cursor.execute(comando)
+            banco.commit()
+            print("Dado atualizado com sucesso!")
+            break
+        except ValueError:
+            print("Ocorreu um problema: dado 'idade' incorreto.\n"
+                  "Por favor, tente novamente!")
+            sleep(2)
+        except sqlite3.OperationalError:
+            print("Digite o NOME da coluna que deseja atualizar.")
+            sleep(2)
 
 #Deleta todos os dados de uma entidade/pessoa.
 def delete(nome_tabela) -> None:

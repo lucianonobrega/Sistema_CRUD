@@ -1,0 +1,3 @@
+-----Atualização para versão 1.1-----
+Problema ao digitar qualquer coisa que não seja o nome de uma coluna na parte de atualizar dados (o programa fecha).
+Status: Resolvido.
